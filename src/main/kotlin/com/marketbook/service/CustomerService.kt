@@ -1,10 +1,13 @@
 package com.marketbook.service
 
 import com.marketbook.model.CustomerModel
+import com.marketbook.repository.CustomerRepository
 import org.springframework.stereotype.Service
 
 @Service
-class CustomerService {
+class CustomerService(
+        val customerRepository: CustomerRepository
+) {
 
     val customersList = mutableListOf<CustomerModel>()
 

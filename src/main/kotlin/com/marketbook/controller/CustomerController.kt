@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("customers")
 class CustomerController(
-        var customerService: CustomerService
+        val customerService: CustomerService
 ) {
     @GetMapping("")
     fun getAll(@RequestParam name: String?): List<CustomerModel> {
