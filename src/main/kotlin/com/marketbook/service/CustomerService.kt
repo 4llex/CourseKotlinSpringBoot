@@ -9,40 +9,33 @@ class CustomerService(
         val customerRepository: CustomerRepository
 ) {
 
-    val customersList = mutableListOf<CustomerModel>()
-
     fun getAll(name: String?): List<CustomerModel> {
         name?.let {
-            return customersList.filter { it.name.contains(name, false) }
+            return customerRepository.findByNameContaining(name)
         }
-        return customersList
+        return customerRepository.findAll().toList()
     }
 
     fun getCustomer(id: Int): CustomerModel {
-        return customersList.filter { it.id == id }.first()
+        return customerRepository.findById(id).orElseThrow()
     }
 
     fun create(customer: CustomerModel) {
-
-        val id = if (customersList.isEmpty()) {
-            1
-        } else {
-            customersList.last().id!!.toInt() + 1
-        }
-
-        customer.id = id
-        customersList.add(customer)
+        customerRepository.save(customer)
     }
 
     fun update(customer: CustomerModel) {
-        customersList.filter { it.id == customer.id }.first().let {
-            it.name = customer.name
-            it.email = customer.email
+        if (!customerRepository.existsById(customer.id!!)) {
+            throw Exception()
         }
+        customerRepository.save(customer)
     }
 
     fun delete(id: Int) {
-        customersList.removeIf { it.id == id }
+        if (!customerRepository.existsById(id)) {
+            throw Exception()
+        }
+        customerRepository.deleteById(id)
     }
 
     fun patchCustomer(): String {
