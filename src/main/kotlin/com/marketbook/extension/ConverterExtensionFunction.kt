@@ -5,16 +5,17 @@ import com.marketbook.controller.request.PostCustomerRequest
 import com.marketbook.controller.request.PutBookRequest
 import com.marketbook.controller.request.PutCustomerRequest
 import com.marketbook.enums.BookStatus
+import com.marketbook.enums.CustomerStatus
 import com.marketbook.model.BookModel
 import com.marketbook.model.CustomerModel
 
 
 fun PostCustomerRequest.toCustomerModel(): CustomerModel {
-    return CustomerModel(name = this.name, email = this.email)
+    return CustomerModel(name = this.name, email = this.email, status = CustomerStatus.ATIVO)
 }
 
-fun PutCustomerRequest.toCustomerModel(id: Int): CustomerModel {
-    return CustomerModel(id = id, name = this.name, email = this.email)
+fun PutCustomerRequest.toCustomerModel(previousValue: CustomerModel): CustomerModel {
+    return CustomerModel(id = previousValue.id, name = this.name, email = this.email, status = previousValue.status)
 }
 
 fun PostBookRequest.toBookModel(customer: CustomerModel): BookModel {

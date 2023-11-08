@@ -1,5 +1,6 @@
 package com.marketbook.model
 
+import com.marketbook.enums.CustomerStatus
 import jakarta.persistence.*
 
 @Entity(name = "customer")
@@ -13,5 +14,10 @@ data class CustomerModel(
         var name: String,
 
         @Column(name = "email", unique = true)
-        var email: String
+        var email: String,
+
+        @Column
+        @Enumerated(EnumType.STRING)
+        var status: CustomerStatus
+
 )
