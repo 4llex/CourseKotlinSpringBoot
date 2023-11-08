@@ -6,6 +6,9 @@ import com.marketbook.controller.response.CustomerResponse
 import com.marketbook.extension.toCustomerModel
 import com.marketbook.extension.toResponse
 import com.marketbook.service.CustomerService
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
@@ -15,8 +18,8 @@ class CustomerController(
         val customerService: CustomerService
 ) {
     @GetMapping("")
-    fun getAll(@RequestParam name: String?): List<CustomerResponse> {
-        return customerService.getAll(name).map { it.toResponse() }
+    fun getAll(@PageableDefault(page = 0, size = 10) pageable: Pageable, @RequestParam name: String?): Page<CustomerResponse> {
+        return customerService.getAll(pageable, name).map { it.toResponse() }
     }
 
     @GetMapping("/{id}")

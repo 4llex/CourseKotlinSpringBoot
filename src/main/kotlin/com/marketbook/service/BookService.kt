@@ -4,6 +4,8 @@ import com.marketbook.enums.BookStatus
 import com.marketbook.model.BookModel
 import com.marketbook.model.CustomerModel
 import com.marketbook.repository.BookRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 @Service
@@ -11,20 +13,20 @@ class BookService(
         val bookRepository: BookRepository
 ) {
 
-    fun findAll(): List<BookModel> {
-        return bookRepository.findAll().toList()
+    fun findAll(pageable: Pageable): Page<BookModel> {
+        return bookRepository.findAll(pageable)
     }
 
-    fun create(book: BookModel) {
-        bookRepository.save(book)
-    }
-
-    fun findActives(): List<BookModel> {
-        return bookRepository.findByStatus(BookStatus.ATIVO)
+    fun findActives(pageable: Pageable): Page<BookModel> {
+        return bookRepository.findByStatus(pageable, BookStatus.ATIVO)
     }
 
     fun findById(id: Int): BookModel {
         return bookRepository.findById(id).orElseThrow()
+    }
+
+    fun create(book: BookModel) {
+        bookRepository.save(book)
     }
 
     fun delete(id: Int) {
