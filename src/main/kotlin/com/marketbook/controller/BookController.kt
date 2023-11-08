@@ -18,8 +18,8 @@ class BookController(
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    fun getAll(): List<BookModel> =
-            bookService.getAll()
+    fun findAll(): List<BookModel> =
+            bookService.findAll()
 
 
     @GetMapping("/actives")
@@ -37,7 +37,7 @@ class BookController(
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun create(@RequestBody request: PostBookRequest): PostBookRequest {
-        val customer = customerService.getById(request.customerId)
+        val customer = customerService.findById(request.customerId)
         bookService.create(request.toBookModel(customer))
         return request
     }

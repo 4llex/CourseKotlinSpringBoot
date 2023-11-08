@@ -2,16 +2,16 @@ package com.marketbook.service
 
 import com.marketbook.enums.BookStatus
 import com.marketbook.model.BookModel
+import com.marketbook.model.CustomerModel
 import com.marketbook.repository.BookRepository
 import org.springframework.stereotype.Service
-import kotlin.jvm.optionals.toList
 
 @Service
 class BookService(
         val bookRepository: BookRepository
 ) {
 
-    fun getAll(): List<BookModel> {
+    fun findAll(): List<BookModel> {
         return bookRepository.findAll().toList()
     }
 
@@ -35,6 +35,14 @@ class BookService(
 
     fun update(book: BookModel) {
         bookRepository.save(book)
+    }
+
+    fun deleteByCustomer(customer: CustomerModel) {
+        val books = bookRepository.findByCustomer(customer)
+        for(book in books) {
+            book.status = BookStatus.DELETADO
+        }
+        bookRepository.saveAll(books)
     }
 
 }
