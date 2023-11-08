@@ -2,8 +2,9 @@ package com.marketbook.controller
 
 import com.marketbook.controller.request.PostCustomerRequest
 import com.marketbook.controller.request.PutCustomerRequest
+import com.marketbook.controller.response.CustomerResponse
 import com.marketbook.extension.toCustomerModel
-import com.marketbook.model.CustomerModel
+import com.marketbook.extension.toResponse
 import com.marketbook.service.CustomerService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
@@ -14,13 +15,13 @@ class CustomerController(
         val customerService: CustomerService
 ) {
     @GetMapping("")
-    fun getAll(@RequestParam name: String?): List<CustomerModel> {
-        return customerService.getAll(name)
+    fun getAll(@RequestParam name: String?): List<CustomerResponse> {
+        return customerService.getAll(name).map { it.toResponse() }
     }
 
     @GetMapping("/{id}")
-    fun getCustomer(@PathVariable id: Int): CustomerModel {
-        return customerService.findById(id)
+    fun getCustomer(@PathVariable id: Int): CustomerResponse {
+        return customerService.findById(id).toResponse()
     }
 
     @PostMapping

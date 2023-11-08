@@ -2,8 +2,9 @@ package com.marketbook.controller
 
 import com.marketbook.controller.request.PostBookRequest
 import com.marketbook.controller.request.PutBookRequest
+import com.marketbook.controller.response.BookResponse
 import com.marketbook.extension.toBookModel
-import com.marketbook.model.BookModel
+import com.marketbook.extension.toResponse
 import com.marketbook.service.BookService
 import com.marketbook.service.CustomerService
 import org.springframework.http.HttpStatus
@@ -18,20 +19,20 @@ class BookController(
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    fun findAll(): List<BookModel> =
-            bookService.findAll()
+    fun findAll(): List<BookResponse> =
+            bookService.findAll().map { it.toResponse() }
 
 
     @GetMapping("/actives")
     @ResponseStatus(HttpStatus.OK)
-    fun findActives(): List<BookModel> =
-            bookService.findActives()
+    fun findActives(): List<BookResponse> =
+            bookService.findActives().map { it.toResponse() }
 
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun findById(@PathVariable id: Int): BookModel {
-        return bookService.findById(id)
+    fun findById(@PathVariable id: Int): BookResponse {
+        return bookService.findById(id).toResponse()
     }
 
     @PostMapping
