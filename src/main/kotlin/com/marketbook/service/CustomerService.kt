@@ -1,6 +1,7 @@
 package com.marketbook.service
 
 import com.marketbook.enums.CustomerStatus
+import com.marketbook.exception.NotFoundException
 import com.marketbook.model.CustomerModel
 import com.marketbook.repository.CustomerRepository
 import org.springframework.data.domain.Page
@@ -21,7 +22,7 @@ class CustomerService(
     }
 
     fun findById(id: Int): CustomerModel {
-        return customerRepository.findById(id).orElseThrow()
+        return customerRepository.findById(id).orElseThrow{ NotFoundException("Customer [${id}] not exists", "ML-0002") }
     }
 
     fun create(customer: CustomerModel) {
