@@ -1,6 +1,13 @@
 package com.marketbook.controller.request
 
+import jakarta.validation.constraints.Email
+import jakarta.validation.constraints.NotEmpty
+
 data class PostCustomerRequest(
-        var name: String,
-        var email: String
+
+    @field:NotEmpty
+    var name: String,
+
+    @field:Email
+    var email: String
 )
