@@ -1,6 +1,6 @@
 package com.marketbook.controller.response
 
 data class FieldErrorResponse (
-    var essage: String,
+    var message: String,
     var field: String
 )

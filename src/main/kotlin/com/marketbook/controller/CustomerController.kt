@@ -34,13 +34,6 @@ class CustomerController(
         customerService.create(customer.toCustomerModel())
     }
 
-    @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun update(@PathVariable id: Int, @RequestBody customer: PutCustomerRequest) {
-        val customerSaved = customerService.findById(id)
-        customerService.update(customer.toCustomerModel(customerSaved))
-    }
-
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun delete(@PathVariable id: Int) {
@@ -52,5 +45,11 @@ class CustomerController(
         return "patch: Atualiza parcialmente um customer, ex: email"
     }
 
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun update(@PathVariable id: Int, @RequestBody @Valid customer: PutCustomerRequest) {
+        val customerSaved = customerService.findById(id)
+        customerService.update(customer.toCustomerModel(customerSaved))
+    }
 
 }
