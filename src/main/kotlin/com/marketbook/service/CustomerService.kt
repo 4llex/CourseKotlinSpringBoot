@@ -51,4 +51,8 @@ class CustomerService(
         return "patch: Atualiza parcialmente um customer, ex: email"
     }
 
+  fun emailAvailable(email: String): Boolean {
+       return !customerRepository.existsByEmail(email)
+  }
+
 }

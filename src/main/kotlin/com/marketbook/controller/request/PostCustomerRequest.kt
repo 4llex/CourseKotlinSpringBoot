@@ -1,5 +1,6 @@
 package com.marketbook.controller.request
 
+import com.marketbook.validation.EmailAvailable
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotEmpty
 
@@ -9,5 +10,6 @@ data class PostCustomerRequest(
     var name: String,
 
     @field:Email(message = "E-mail deve ser válido")
+    @EmailAvailable
     var email: String
 )
