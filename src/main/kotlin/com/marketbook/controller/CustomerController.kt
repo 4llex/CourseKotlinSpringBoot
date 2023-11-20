@@ -19,8 +19,8 @@ class CustomerController(
         val customerService: CustomerService
 ) {
     @GetMapping("")
-    fun getAll(@PageableDefault(page = 0, size = 10) pageable: Pageable, @RequestParam name: String?): Page<CustomerResponse> {
-        return customerService.getAll(pageable, name).map { it.toResponse() }
+    fun getAll(@PageableDefault(page = 0, size = 10, sort = ["name"]) pageable: Pageable?, @RequestParam name: String?): Page<CustomerResponse> {
+        return customerService.getAll(pageable!!, name).map { it.toResponse() }
     }
 
     @GetMapping("/{id}")

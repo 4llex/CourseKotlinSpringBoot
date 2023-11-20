@@ -23,8 +23,8 @@ class BookController(
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    fun findAll(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<BookResponse> =
-            bookService.findAll(pageable).map { it.toResponse() }
+    fun findAll(@PageableDefault(page = 0, size = 10, sort = ["name"]) pageable: Pageable?): Page<BookResponse> =
+            bookService.findAll(pageable!!).map { it.toResponse() }
 
 
     @GetMapping("/actives")
